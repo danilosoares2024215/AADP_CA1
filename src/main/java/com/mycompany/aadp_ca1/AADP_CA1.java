@@ -6,7 +6,7 @@ package com.mycompany.aadp_ca1;
 
 /**
  *
- * @author Sr. & Sra. Dibidi
+ * @author danilo
  */
 public class AADP_CA1 {
 

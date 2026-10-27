@@ -45,7 +45,7 @@ public class FoodItem {
         return dateTime;
     }
     
-    // implements the details method from StorageItem class and returns the information
+    // returns all the information about the food item
     public String getDetails() {
         return getName()
                 + "\nWeight: " + getWeight() + "g"

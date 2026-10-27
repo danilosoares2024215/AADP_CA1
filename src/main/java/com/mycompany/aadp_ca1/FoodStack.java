@@ -15,6 +15,15 @@ public interface FoodStack {
 
     // removes and returns the food item at the top of the storage
     FoodItem pop();
+    
+    // returns the food item at the top without removing it
+    FoodItem peek();
+
+    // shows all the food items in the storage, from top to bottom
+    void display();
+
+    // looks for a food item by name and returns its position (-1 if not found)
+    int search(String name);
 
     // returns true if the storage is empty
     boolean isEmpty();
