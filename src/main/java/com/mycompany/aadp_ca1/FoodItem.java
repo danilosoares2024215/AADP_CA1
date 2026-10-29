@@ -6,6 +6,7 @@ package com.mycompany.aadp_ca1;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -14,12 +15,14 @@ import java.time.LocalDateTime;
 public class FoodItem {
     
     private final String name;              // name of the food item
-    private final double weight;            // weight in grams
+    private final int weight;            // weight in grams
     private final LocalDate bestBefore;     // best before date (without time)
     private final LocalDateTime dateTime;   // date and time the item was placed into storage
+    private static final DateTimeFormatter datePolish = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // sets the date to a polished format on display
+    private static final DateTimeFormatter timePolish = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"); // sets the time to a polished format on display
 
     // constructor to get the product name, weight and best before. also gets the time it was stord
-    public FoodItem(String name, double weight, LocalDate bestBefore) {
+    public FoodItem(String name, int weight, LocalDate bestBefore) {
 
         this.name = name;
         this.weight = weight;
@@ -33,7 +36,7 @@ public class FoodItem {
         return name;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
@@ -49,7 +52,7 @@ public class FoodItem {
     public String getDetails() {
         return getName()
                 + "\nWeight: " + getWeight() + "g"
-                + "\nBest Before: " + bestBefore
-                + "\nDate Stored: " + getTimeStored();
+                + "\nBest Before: " + bestBefore.format(datePolish)
+                + "\nDate Stored: " + getTimeStored().format(timePolish);
     }
 }

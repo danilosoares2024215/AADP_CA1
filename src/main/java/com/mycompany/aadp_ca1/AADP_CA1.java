@@ -17,6 +17,7 @@ public class AADP_CA1 {
         
         Scanner myKB = new Scanner(System.in);
         FoodStack storage = new FoodStorageStack(8);   // storage with a max of 8 trays
+        String[] foodTypes = {"Burger", "Pizza", "Fries", "Sandwich", "Hotdog"};   // the only foods allowed
 
         // the menu keeps showing until the user chooses to exit
         while (true) {
@@ -35,16 +36,39 @@ public class AADP_CA1 {
 
             switch (choice) {
                 
-                case 1:   // add/puush
+                case 1:   // add/puush with the option required by the assignment
                     
-                    System.out.print("Food name: ");
-                    String name = myKB.nextLine();
+                    System.out.println("1. Burger");
+                    System.out.println("2. Pizzza");
+                    System.out.println("3. Fries");
+                    System.out.println("4. Sandwich");
+                    System.out.println("5. Hotdog");
+                    System.out.println("Choose an option (1 to 5).");
+                    int foodChoice = myKB.nextInt();
+                    
+                    // creates a restriction for the user to select between only the availiable options
+                    while (foodChoice < 1 || foodChoice > 5) {
+                        
+                        System.out.println("Invalid option. Please choose an option between the availiable ones.");
+                        foodChoice = myKB.nextInt();
+                        
+                    }
+                    
+                    String name = foodTypes[foodChoice -1]; // option 1 on the array is on index 0
 
                     System.out.print("Weight (in grams): ");
-                    double weight = myKB.nextDouble();
+                    int weight = myKB.nextInt();
+                    
+                      while (weight <= 0) {
+                        
+                        System.out.print("The weight must be bigger than 0g.\nWeight (in grams): ");
+                        weight = myKB.nextInt();
+                        
+                    }
+                    
                     myKB.nextLine();
 
-                    System.out.print("Best before date (YYYY-MM-DD): ");
+                    System.out.print("Best before date (YYYY-MM-DD. Maximum of two weeks.: ");
                     LocalDate bestBefore = LocalDate.parse(myKB.nextLine());
 
                     storage.push(new FoodItem(name, weight, bestBefore));
@@ -83,13 +107,23 @@ public class AADP_CA1 {
 
                 case 5:   // search
                     
-                    System.out.print("Which food you want to search? ");
-                    String searchName = myKB.nextLine();
+                    System.out.print("Which food you want to search? (1-5) ");
+                    System.out.println("\n1. Burger  2. Pizza  3. Fries  4. Sandwich  5. Hotdog");
+                    int searchFood = myKB.nextInt();
+                    
+                    while (searchFood < 1 || searchFood > 5) {
+                        
+                        System.out.print("Invalid option! Choose a number from 1 to 5: ");
+                        searchFood = myKB.nextInt();
+                        
+                    }
+                    
+                    String searchName = foodTypes[searchFood - 1];
                     int index = storage.search(searchName);
                     
                     if (index != -1) {
                         
-                        System.out.println(searchName + " was found on tray " + (index + 1));
+                        System.out.println(searchName + " is located at tray " + (index + 1));
                         
                     } else {
                         
