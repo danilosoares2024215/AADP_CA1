@@ -31,120 +31,139 @@ public class AADP_CA1 {
             System.out.println("6. Exit");
             System.out.print("Choose an option from 1-6: ");
 
-            int choice = myKB.nextInt();
-            myKB.nextLine();   // skips the enter left by nextInt
+            // try and catches to handle errors and avoid the crashes on user mistakes
+            try {
 
-            switch (choice) {
-                
-                case 1:   // add/puush with the option required by the assignment
+                int choice = myKB.nextInt();
+                myKB.nextLine();   // skips the enter left by nextInt
+
+                switch (choice) {
                     
-                    System.out.println("1. Burger");
-                    System.out.println("2. Pizzza");
-                    System.out.println("3. Fries");
-                    System.out.println("4. Sandwich");
-                    System.out.println("5. Hotdog");
-                    System.out.println("Choose an option (1 to 5).");
-                    int foodChoice = myKB.nextInt();
-                    
+                    case 1:   // add/puush with the option required by the assignment
+                        
+                        // checks before asking what user wants to add, so he doesn't add al the details and the storage space chekc is done after
+                        if (storage.isFull()) {
+                            
+                            System.out.println("The storage is full. Free some space before adding a new item.");
+                            break;
+                            
+                        }
+                        
+                        System.out.println("1. Burger");
+                        System.out.println("2. Pizzza");
+                        System.out.println("3. Fries");
+                        System.out.println("4. Sandwich");
+                        System.out.println("5. Hotdog");
+                        System.out.println("Choose an option (1 to 5).");
+                        int foodChoice = myKB.nextInt();
+                        
                     // creates a restriction for the user to select between only the availiable options
-                    while (foodChoice < 1 || foodChoice > 5) {
-                        
+                        while (foodChoice < 1 || foodChoice > 5) {
+                            
                         System.out.println("Invalid option. Please choose an option between the availiable ones.");
-                        foodChoice = myKB.nextInt();
+                            foodChoice = myKB.nextInt();
+                            
+                        }
                         
-                    }
-                    
-                    String name = foodTypes[foodChoice -1]; // option 1 on the array is on index 0
+                        String name = foodTypes[foodChoice -1]; // option 1 on the array is on index 0
 
-                    System.out.print("Weight (in grams): ");
-                    int weight = myKB.nextInt();
-                    
-                      while (weight <= 0) {
+                        System.out.print("Weight (in grams): ");
+                        int weight = myKB.nextInt();
                         
-                        System.out.print("The weight must be bigger than 0g.\nWeight (in grams): ");
-                        weight = myKB.nextInt();
+                        while (weight <= 0) {
+                            
+                            System.out.print("The weight must be bigger than 0g.\nWeight (in grams): ");
+                            weight = myKB.nextInt();
+                            
+                        }
                         
-                    }
-                    
-                    myKB.nextLine();
+                        myKB.nextLine();
 
                     System.out.print("Best before date (YYYY-MM-DD. Maximum of two weeks.: ");
-                    LocalDate bestBefore = LocalDate.parse(myKB.nextLine());
+                        LocalDate bestBefore = LocalDate.parse(myKB.nextLine());
 
-                    storage.push(new FoodItem(name, weight, bestBefore));
-                    
-                    break;
-
-                case 2:   // remove/pop
-                    
-                    FoodItem removed = storage.pop();
-                    
-                    if (removed != null) {
+                        storage.push(new FoodItem(name, weight, bestBefore));
                         
+                        break;
+
+                    case 2:   // remove/pop
+                        
+                        FoodItem removed = storage.pop();
                         System.out.println(removed.getDetails() + " has been removed from the storage");
                         
-                    }
-                    
-                    break;
+                        break;
 
-                case 3:   // show the top (peek)
-                    
-                    FoodItem topItem = storage.peek();
-                    
-                    if (topItem != null) {
+                    case 3:   // show the top (peek)
                         
+                        FoodItem topItem = storage.peek();
                         System.out.println("Food item at the top is " + topItem.getName());
                         
-                    }
-                    
-                    break;
+                        break;
 
-                case 4:   // show all (display)
-                    
-                    storage.display();
-                    
-                    break;
+                    case 4:   // show all (display)
+                        
+                        storage.display();
+                        
+                        break;
 
-                case 5:   // search
-                    
-                    System.out.print("Which food you want to search? (1-5) ");
-                    System.out.println("\n1. Burger  2. Pizza  3. Fries  4. Sandwich  5. Hotdog");
-                    int searchFood = myKB.nextInt();
-                    
-                    while (searchFood < 1 || searchFood > 5) {
+                    case 5:   // search
                         
-                        System.out.print("Invalid option! Choose a number from 1 to 5: ");
-                        searchFood = myKB.nextInt();
+                        // same check before getting what the user wants
+                        if (storage.isEmpty()) {
+                            
+                            System.out.println("Storage is empty! There is nothing to search.");
+                            break;
+                            
+                        }
                         
-                    }
-                    
-                    String searchName = foodTypes[searchFood - 1];
-                    int index = storage.search(searchName);
-                    
-                    if (index != -1) {
+                        System.out.print("Which food you want to search? (1-5) ");
+                        System.out.println("\n1. Burger  2. Pizza  3. Fries  4. Sandwich  5. Hotdog");
+                        int searchFood = myKB.nextInt();
                         
-                        System.out.println(searchName + " is located at tray " + (index + 1));
+                        while (searchFood < 1 || searchFood > 5) {
+                            
+                            System.out.print("Invalid option! Choose a number from 1 to 5: ");
+                            searchFood = myKB.nextInt();
+                            
+                        }
                         
-                    } else {
+                        String searchName = foodTypes[searchFood - 1];
+                        int index = storage.search(searchName);
                         
-                        System.out.println(searchName + " couldn't be found in the storage");
+                        if (index != -1) {
+                            
+                            System.out.println(searchName + " is located at tray " + (index + 1));
+                            
+                        } else {
+                            
+                            System.out.println(searchName + " couldn't be found in the storage");
+                            
+                        }
                         
-                    }
-                    
-                    break;
+                        break;
 
-                case 6:   // exit
-                    
-                    System.out.println("Closed");
-                    myKB.close();
-                    
-                    return;
+                    case 6:   // exit
+                        
+                        System.out.println("Closed");
+                        myKB.close();
+                        
+                        return;
 
-                default:
-                    
-                    System.out.println("Invalid command. Please choose a number 1 to 6");
-                    
-            }
+                    default:
+                        
+                        System.out.println("Invalid command. Please choose a number 1 to 6");
+                        
+                }
+
+            } catch (FullStorageException e) {   // the storage is full
+                
+                System.out.println(e.getMessage());
+                
+            } catch (EmptyStorageException e) {   // the storage is empty
+                
+                System.out.println(e.getMessage());
+                
+            } 
         }        
     }
 }

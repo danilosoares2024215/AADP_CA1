@@ -10,14 +10,14 @@ package com.mycompany.aadp_ca1;
  */
 public interface FoodStack {
 
-    // adds a food item to the top of the storage list
-    void push(FoodItem item);
+    // adds a food item to the top of the storage list + exception
+    void push(FoodItem item) throws FullStorageException;
 
-    // removes and returns the food item at the top of the storage
-    FoodItem pop();
+    // removes and returns the food item at the top of the storage + exception
+    FoodItem pop() throws EmptyStorageException;
     
-    // returns the food item at the top without removing it
-    FoodItem peek();
+    // returns the food item at the top without removing it + exception
+    FoodItem peek() throws EmptyStorageException;
 
     // shows all the food items in the storage, from top to bottom
     void display();
